@@ -7,7 +7,7 @@
 #include "JobSystem.h"
 #include "Job.h"
 
-Worker::Worker( JobSystem * system, JobQueue* queue ) 
+Worker::Worker( JobSystem *system, JobQueue *queue ) 
 	: system( system ), queue( queue ), thread( nullptr ), threadId(std::this_thread::get_id()) {}
 
 Worker::~Worker()
@@ -29,15 +29,15 @@ void Worker::Start()
 
 void Worker::Stop()
 {
-	state = State::IDDLE;
+	state = State::IDLE;
 }
 
-void Worker::Submit( Job * job )
+void Worker::Submit( Job *job )
 {
 	queue->Push( job );
 }
 
-void Worker::Wait( Job* sentinel )
+void Worker::Wait( Job *sentinel )
 {
 	while ( !sentinel->IsFinished() )
 	{
@@ -102,7 +102,7 @@ bool Worker::IsRunning()
 	return ( state == State::RUNNING );
 }
 
-std::thread::id Worker::GetThreadId() const
+const std::thread::id& Worker::GetThreadId() const
 {
 	return threadId;
 }

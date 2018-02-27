@@ -2,7 +2,8 @@
 
 #include <algorithm>
 
-JobQueue::JobQueue( size_t maxJobs ) : maxJobs ( maxJobs )
+JobQueue::JobQueue( size_t maxJobs ) 
+	: maxJobs ( maxJobs )
 {
 	bottomIndex = 0;
 	topIndex = 0;

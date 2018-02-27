@@ -56,18 +56,18 @@ Job* JobSystem::CreateJob( JobFunction function ) const
 	return CreateJob( function, nullptr );
 }
 
-Job* JobSystem::CreateJob( JobFunction function, void * data ) const
+Job* JobSystem::CreateJob( JobFunction function, void *data ) const
 {
 	// TODO (jonathan): Change this for a pool of jobs
 	return new Job( function, nullptr, data );
 }
 
-Job* JobSystem::CreateJobAsChild( JobFunction function, Job * parent ) const
+Job* JobSystem::CreateJobAsChild( JobFunction function, Job *parent ) const
 {
 	return CreateJobAsChild( function, parent, nullptr );
 }
 
-Job* JobSystem::CreateJobAsChild( JobFunction function, Job * parent, void * data ) const
+Job* JobSystem::CreateJobAsChild( JobFunction function, Job *parent, void *data ) const
 {
 	// TODO (jonathan): Change this for a pool of jobs
 	return new Job( function, parent, data );
@@ -103,7 +103,7 @@ JobQueue* JobSystem::GetRandomJobQueue()
 
 Worker * JobSystem::FindWorkerWithThreadID( const std::thread::id &id ) const
 {
-	for ( Worker * worker : workers )
+	for ( Worker *worker : workers )
 	{
 		if ( id == worker->GetThreadId() )
 		{
@@ -115,7 +115,7 @@ Worker * JobSystem::FindWorkerWithThreadID( const std::thread::id &id ) const
 
 void JobSystem::ClearJobQueues()
 {
-	for ( JobQueue * queue : queues )
+	for ( JobQueue *queue : queues )
 	{
 		queue->Clear();
 	}

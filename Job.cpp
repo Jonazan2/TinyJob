@@ -1,6 +1,7 @@
 #include "Job.h"
 
-Job::Job( JobFunction function, Job *parent, void *data ) : function( function ), parent ( parent ), data ( data ), pendingJobs { 1 } 
+Job::Job( JobFunction function, Job *parent, void *data ) 
+	: function( function ), parent ( parent ), data ( data ), pendingJobs { 1 } 
 {
 	if ( parent != nullptr )
 	{

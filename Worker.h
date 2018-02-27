@@ -12,20 +12,20 @@ class Worker
 		enum class State : unsigned int
 		{
 			RUNNING = 0,
-			IDDLE
+			IDLE
 		};
 
-		Worker( JobSystem *, JobQueue* );
+		Worker( JobSystem *, JobQueue * );
 		Worker( const Worker & ) = delete;
 		~Worker();
 
 		void Start();
 		void Stop();
-		void Submit( Job * job );
-		void Wait( Job* sentinel );
+		void Submit( Job *job );
+		void Wait( Job *sentinel );
 		bool IsRunning();
 
-		std::thread::id GetThreadId() const;
+		const std::thread::id& GetThreadId() const;
 
 	private:
 		State state;
