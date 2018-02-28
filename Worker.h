@@ -19,7 +19,7 @@ class Worker
 		Worker( const Worker & ) = delete;
 		~Worker();
 
-		void Start();
+		void StartBackgroundThread();
 		void Stop();
 		void Submit( Job *job );
 		void Wait( Job *sentinel );

@@ -2,6 +2,7 @@
 
 #include <thread>
 #include <vector>
+
 #include "Job.h"
 
 class JobQueue;
@@ -24,11 +25,12 @@ class JobSystem
 
 		void ClearJobQueues();
 		JobQueue* GetRandomJobQueue();
+
 	private:
 		size_t workersCount;
 
 		std::vector< Worker * > workers;
 		std::vector< JobQueue * > queues;
-	
+
 		Worker * FindWorkerWithThreadID( const std::thread::id &id ) const;
 };

@@ -1,6 +1,7 @@
 #include "JobSystem.h"
 
 #include <random>
+#include <thread>
 
 #include "JobQueue.h"
 #include "Worker.h"
@@ -25,9 +26,10 @@ JobSystem::JobSystem( size_t workersCount, size_t jobsPerWorker) : workersCount(
 		workers.push_back( worker );
 	}
 
+	// Start background thread for all the workers except the main thread one (first on the vector)
 	for ( size_t i = 1; i <= workersCount; ++i )
 	{
-		workers[i]->Start();
+		workers[i]->StartBackgroundThread();
 	}
 }
 
@@ -93,9 +95,9 @@ void JobSystem::Wait( Job *job )
 
 JobQueue* JobSystem::GetRandomJobQueue()
 {
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> distribution( 0, workersCount );
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    static std::uniform_int_distribution<> distribution( 0, workersCount );
 
 	size_t index = static_cast<size_t> ( std::round( distribution( gen ) ) );
 	return queues[ index ];

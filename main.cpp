@@ -20,9 +20,9 @@ int main(int argc, char **argv)
 	char *data = "No Job, I'm your father\n";
 	Job *parent = jobSystem.CreateJob( PrintSomethingNice, data );
 
-	for ( int i = 0; i < 50000; ++i )
+	for ( int i = 0; i < 10000; ++i )
 	{
-		Job * job = jobSystem.CreateJobAsChild( PrintSomething, parent );
+		Job *job = jobSystem.CreateJobAsChild( PrintSomething, parent );
 		jobSystem.Run( job );
 	}
 	jobSystem.Run( parent );

@@ -20,7 +20,7 @@ Worker::~Worker()
 	}
 }
 
-void Worker::Start()
+void Worker::StartBackgroundThread()
 {
 	state = State::RUNNING;
 	thread = new std::thread( &Worker::Loop, this );

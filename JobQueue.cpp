@@ -8,15 +8,13 @@ JobQueue::JobQueue( size_t maxJobs )
 	bottomIndex = 0;
 	topIndex = 0;
 	queue.resize( maxJobs );
-
-	mask = maxJobs - 1;
 }
 
 void JobQueue::Push( Job *job )
 {
 	int bottom = bottomIndex.load( std::memory_order_acquire );
 	queue[ bottom ] = job;
-	bottomIndex.compare_exchange_strong(bottom, bottom + 1);
+	bottomIndex.store( bottom + 1, std::memory_order_release );
 }
 
 Job* JobQueue::Pop()
