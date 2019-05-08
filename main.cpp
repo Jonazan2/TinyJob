@@ -1,7 +1,7 @@
 #include <iostream>
 
+#include <string>
 #include "JobSystem.h"
-#include "Worker.h"
 
 void PrintSomethingNice( void *data )
 {
@@ -17,8 +17,9 @@ int main(int argc, char **argv)
 {
 	JobSystem jobSystem( 7, 65536 );
 
-	char *data = "No Job, I'm your father\n";
-	Job *parent = jobSystem.CreateJob( PrintSomethingNice, data );
+	/* Example of how to use a job as a parent to create a fence */
+	std::string data = "No Job, I'm your father\n";
+	Job* parent = jobSystem.CreateJob(PrintSomethingNice, (void*) data.c_str() );
 
 	for ( int i = 0; i < 10000; ++i )
 	{
