@@ -1,6 +1,6 @@
 
 # TinyJob
-TinyJob is a simple job system implemented in C++11. It is based on the execution of several workers in parallel that are feeded a job via a free-lock stealing queue. The system also supports hierarchy so we can wait in the main thread until all the jobs that are pending from a root one get executed before continuing. 
+TinyJob is a simple job system implemented in C++11. It is based on the execution of several workers in parallel that are fed a job via a lock-free stealing queue. The system also supports hierarchy so we can wait in the main thread until all the jobs that are pending from a root one get executed before continuing.
 
 ## Workers
 The system contains N workers and a job queue per worker. Workers are in charge of executing jobs or wait until a job has been completed. Jobs can only be added to the worker running in the current thread. There will always be a worker on the main thread.
