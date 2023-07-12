@@ -30,13 +30,13 @@ This operation adds a new element into the queue. It only increments the bottom 
 </p>
 
 ### Pop
-This operation extracts and element from the queue. It only decrements the bottom index. In case there is only an element left in the queue it must execute a CAS operation with the top index value to check if a Steal() operation has already taken away the last job before we could complete the Pop().
+This operation extracts an element from the queue. It only decrements the bottom index. In case there is only an element left in the queue it must execute a CAS operation with the top index value to check if a Steal() operation has already taken away the last job before we could complete the Pop().
 <p align="center">
   <img src="https://github.com/Jonazan2/TinyJob/blob/master/docs/pop.png" alt="pop"/>
 </p>
 
 ### Steal
-Other concurrent workers may request via GetJob() a Steal() operation. This operation extracts and element from the queue. It only increments the top index. In case there is only an element left in the queue it must execute a CAS operation with the bottom index value to check if a Pop() operation has already taken away the last job before we could complete the Steal().
+Other concurrent workers may request via GetJob() a Steal() operation. This operation extracts an element from the queue. It only increments the top index. In case there is only an element left in the queue it must execute a CAS operation with the bottom index value to check if a Pop() operation has already taken away the last job before we could complete the Steal().
 <p align="center">
   <img src="https://github.com/Jonazan2/TinyJob/blob/master/docs/steal.png" alt="steal"/>
 </p>
