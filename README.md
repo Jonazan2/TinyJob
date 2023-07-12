@@ -13,7 +13,7 @@ The key of the whole system is the implementation of a lock-free stealing queue.
 The implementation of the JobQueue is based on two atomic integers: top and bottom. Each queue provides three main functionalities: Push(), Pop() and Steal(). The first two operations: Push() and Pop() must always be executed by the same thread and never concurrently, the last one on the other hand must only be executed concurrently.
 
 <p align="center">
-  <img src="http://jonathanmcontreras.com/images/portfolio/tinyjob/initial.png" alt="initial state"/>
+  <img src="https://github.com/Jonazan2/TinyJob/blob/master/docs/initial.png" alt="initial state"/>
 </p>
 
 Each worker will Push() elements to its own queue and Pop() elements from its own queue in a LIFO way. Other workers will request a Steal() operation using a FIFO strategy. This means that the queue behaves like a FIFO and a LIFO at the same time depending of the operation that we are calling.
@@ -22,23 +22,23 @@ Each worker will Push() elements to its own queue and Pop() elements from its ow
 This operation adds a new element into the queue. It only increments the bottom index and doesn't need to perform any CAS operation.
 
 <p align="center">
-  <img src="http://jonathanmcontreras.com/images/portfolio/tinyjob/push.png" alt="push one element"/>
+  <img src="https://github.com/Jonazan2/TinyJob/blob/master/docs/push.png" alt="push one element"/>
 </p>
 
 <p align="center">
-  <img src="http://jonathanmcontreras.com/images/portfolio/tinyjob/push_2.png" alt="push several elements"/>
+  <img src="https://github.com/Jonazan2/TinyJob/blob/master/docs/push_2.png" alt="push several elements"/>
 </p>
 
 ### Pop
 This operation extracts and element from the queue. It only decrements the bottom index. In case there is only an element left in the queue it must execute a CAS operation with the top index value to check if a Steal() operation has already taken away the last job before we could complete the Pop().
 <p align="center">
-  <img src="http://jonathanmcontreras.com/images/portfolio/tinyjob/pop.png" alt="pop"/>
+  <img src="https://github.com/Jonazan2/TinyJob/blob/master/docs/pop.png" alt="pop"/>
 </p>
 
 ### Steal
 Other concurrent workers may request via GetJob() a Steal() operation. This operation extracts and element from the queue. It only increments the top index. In case there is only an element left in the queue it must execute a CAS operation with the bottom index value to check if a Pop() operation has already taken away the last job before we could complete the Steal().
 <p align="center">
-  <img src="http://jonathanmcontreras.com/images/portfolio/tinyjob/steal.png" alt="steal"/>
+  <img src="https://github.com/Jonazan2/TinyJob/blob/master/docs/steal.png" alt="steal"/>
 </p>
 
 
@@ -88,11 +88,6 @@ jobSystem.Wait( parent );
 The system is design with the idea that the main thread will create a high level job and wait until it finishes. This high level job will maybe create more jobs to complete its execution and it will add them to the system via the worker in which is being executed. 
 
 You can for example create a high level job for creating a save file that will then create several jobs, one per sub systems, each of them saving the information of their own parts. You can as well create a job that will trigger a request and put that background worker to wait until the request is completed.
-
-## Possible improvements
-The system right now is quite simple and there are some obvious improvements that can be made: 
-* Right now jobs can only receive data via objects in the Heap. It would be nice to give more versatility to the system in this regard.
-* It would also be quite nice to add a dependency system between jobs so one job will be executed before other if we want so.
 
 ## Documentation
 There are a few great articles regarding job systems and lock-free programming. TinyJob is based on the articles from molecular matters: https://blog.molecular-matters.com that talk about their job system and you may find a nice introduction of lock-free programing in the Preshing on Programming blog: http://preshing.com/20120612/an-introduction-to-lock-free-programming/.
